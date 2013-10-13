@@ -10,7 +10,9 @@ import javax.vecmath.Vector3f;
 import jp.dip.suitougreentea.BulletShot.Res;
 import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.Terrain;
+import jp.dip.suitougreentea.BulletShot.TerrainUtil;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
@@ -43,6 +45,30 @@ public class GLRenderer {
         displayHeight = Display.getDisplayMode().getHeight();
     }
     
+    /**
+     * Get drawing buffers of floors.
+     * @return Arrays of FloatBuffer. [0] is Normal, [1] is TexCoord, [2] is Vertex.
+     */
+    public FloatBuffer[] getBuffer(int x, int z, Terrain t){
+        FloatBuffer[] result = new FloatBuffer[3];
+        result[0] = BufferUtils.createFloatBuffer(18);
+        int type = t.getType();
+        int height = t.getHeight();
+        int direction = t.getDirection();
+        
+        if(type==Terrain.TERRAIN_NORMAL){
+            result[0].put(new float[]{
+                    x, TerrainUtil.getHeight(0, 0, type, height, direction), z,
+                    x, TerrainUtil.getHeight(0, 1, type, height, direction), z+1,
+                    x+1, TerrainUtil.getHeight(1, 1, type, height, direction), z+1,
+                    x+1, TerrainUtil.getHeight(1, 1, type, height, direction), z+1,
+                    x+1, TerrainUtil.getHeight(1, 0, type, height, direction), z,
+                    x, TerrainUtil.getHeight(0, 0, type, height, direction), z,
+            });
+        } 
+        return result;
+    }
+
     public void draw(Stage s,Transform[] predict,int frame){
         //if(true)return;
         glEnable(GL_LIGHT0);
@@ -82,28 +108,30 @@ public class GLRenderer {
                 Terrain t = terrain[iz][ix];
                 if(t.getHeight()==0)continue;
                 glPushMatrix();
-                glTranslatef(ix, t.getHeight() * 0.5f, iz);
                 
-                if(t.getType()==Terrain.TERRAIN_NORMAL){
-                    drawNormal();
-                }
-                if(t.getType()==Terrain.TERRAIN_PYRAMID){
-                    drawPyramid();
-                }
-                if(t.getType()==Terrain.TERRAIN_LOWSLOPE){
-                    drawLowSlope(t.getDirection());
-                }
-                if(t.getType()==Terrain.TERRAIN_HIGHSLOPE){
-                    drawHighSlope(t.getDirection());
-                }
-                if(t.getType()==Terrain.TERRAIN_SINGLESLOPE){
-                    drawSingleSlope(t.getDirection());
-                }
-                if(t.getType()==Terrain.TERRAIN_DOUBLESLOPE){
-                    drawDoubleSlope(t.getDirection());
-                }
+                //Res.tile.bind();
+                /*glBegin(GL_QUADS);
+                //glColor3f(1f,1f,1f);
+                glNormal3f(0f,1f,0f);
+                glTexCoord2f(0,0);
+                glVertex3f(0,0,0);
+                glTexCoord2f(0,2);
+                glVertex3f(0,0,1);
+                glTexCoord2f(1,2);
+                glVertex3f(1,0,1);
+                glTexCoord2f(1,0);
+                glVertex3f(1,0,0);
+                glEnd();*/
                 
-                glTranslatef(0,0.001f,0);   //TODO: ずらしてるだけ
+                FloatBuffer[] buf = getBuffer(ix,iz,t);
+                TextureImpl.bindNone();
+                glColor3f(1f,1f,1f);
+                glEnableClientState(GL_VERTEX_ARRAY);
+                glVertexPointer(3, 0, buf[0]);
+                glDrawArrays(GL_TRIANGLES,0,18);
+                glDisableClientState(GL_VERTEX_ARRAY);
+                
+                glTranslatef(ix,0.001f,iz);   //TODO: ずらしてるだけ
                 
                 if(t.getEffect()!=null)t.getEffect().getRenderer().draw(t);
                 
@@ -256,9 +284,9 @@ public class GLRenderer {
         glNormal3f(0f,1f,0f);
         glTexCoord2f(0,0);
         glVertex3f(0,0,0);
-        glTexCoord2f(0,1);
+        glTexCoord2f(0,2);
         glVertex3f(0,0,1);
-        glTexCoord2f(1,1);
+        glTexCoord2f(1,2);
         glVertex3f(1,0,1);
         glTexCoord2f(1,0);
         glVertex3f(1,0,0);
