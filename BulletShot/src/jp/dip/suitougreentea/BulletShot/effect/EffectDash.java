@@ -4,6 +4,9 @@ import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.BulletShot;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
+import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
+import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectDash;
+import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
 
 import com.bulletphysics.dynamics.RigidBody;
 
@@ -26,8 +29,6 @@ public class EffectDash extends Effect {
     public static final int DIRECTION_NULL = 8;
     
     private int speed;
-    public static final int SPEED_SLOW = 0;
-    public static final int SPEED_FAST = 1;
     
     public EffectDash(int direction, int speed){
         //super(x,z);
@@ -45,7 +46,12 @@ public class EffectDash extends Effect {
     @Override
     public void activate(int x, int z,ObjectPlayer player){
         if(!player.isFlying()){
-            player.getRigidBody().applyCentralForce(new Vector3f(10f,0f,0f));
+            player.getRigidBody().applyCentralForce(new Vector3f(2f*speed,0f,0f));
         }
+    }
+    
+    @Override
+    public RendererObject getRenderer(){
+        return new RendererObjectDash(direction);
     }
 }

@@ -20,7 +20,7 @@ public class Effect {
     public void activate(int x, int z,ObjectPlayer player){
         
     }
-    public RendererObjectNormal getRenderer() {
-        return new RendererObjectNormal();
+    public RendererObject getRenderer() {
+        return new RendererObjectNormal(0,0);
     }
 }

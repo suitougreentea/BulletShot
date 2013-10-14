@@ -4,6 +4,7 @@ import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 import jp.dip.suitougreentea.BulletShot.effect.Effect;
 import jp.dip.suitougreentea.BulletShot.effect.EffectDash;
+import jp.dip.suitougreentea.BulletShot.effect.EffectKick;
 
 public class StageGeneratorFlat implements StageGenerator {
     private int stageWidth;
@@ -35,7 +36,16 @@ public class StageGeneratorFlat implements StageGenerator {
             }
         }
         
-        effect[2][2] = new EffectDash(0,0);
+        effect[2][2] = new EffectKick(EffectKick.DIRECTION_RIGHT);
+        effect[2][4] = new EffectKick(EffectKick.DIRECTION_BOTTOMRIGHT);
+        effect[3][5] = new EffectKick(EffectKick.DIRECTION_BOTTOM);
+        effect[5][5] = new EffectKick(EffectKick.DIRECTION_BOTTOMLEFT);
+        effect[6][4] = new EffectKick(EffectKick.DIRECTION_LEFT);
+        effect[6][2] = new EffectKick(EffectKick.DIRECTION_TOPLEFT);
+        effect[5][1] = new EffectKick(EffectKick.DIRECTION_TOP);
+        effect[3][1] = new EffectKick(EffectKick.DIRECTION_TOPRIGHT);
+        
+        effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT,10);
        
         return Stage.createTerrain(type, height, direction, bumper, effect, chara);
     }

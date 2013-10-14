@@ -4,6 +4,8 @@ import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.BulletShot;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
+import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
+import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
 
 import com.bulletphysics.dynamics.RigidBody;
 
@@ -23,16 +25,13 @@ public class EffectKick extends Effect {
     public static final int DIRECTION_BOTTOMRIGHT = 5;
     public static final int DIRECTION_RIGHT = 6;
     public static final int DIRECTION_TOPRIGHT = 7;
-    public static final int DIRECTION_NULL = 8;
     
-    private int speed;
     public static final int SPEED_SLOW = 0;
     public static final int SPEED_FAST = 1;
     
-    public EffectKick(int direction, int speed){
+    public EffectKick(int direction){
         //super(x,z);
         this.direction = direction;
-        this.speed = speed;
     }
     
     @Override
@@ -49,10 +48,15 @@ public class EffectKick extends Effect {
             Vector3f s = new Vector3f();
             player.getRigidBody().getLinearVelocity(v);
             float velocity = (float) Math.sqrt(Math.pow(v.x,2)+Math.pow(v.z,2));
-            s.x = (float) Math.cos(90 * Math.PI / 180) * velocity;
+            s.x = (float) Math.cos((270-direction*45) * Math.PI / 180) * velocity;
             s.y = v.y;
-            s.z = (float) Math.sin(90 * Math.PI / 180) * velocity;
+            s.z = (float) Math.sin((270-direction*45) * Math.PI / 180) * velocity;
             player.getRigidBody().setLinearVelocity(s);
         }
+    }
+    
+    @Override
+    public RendererObject getRenderer(){
+        return new RendererObjectNormal(4, direction);
     }
 }

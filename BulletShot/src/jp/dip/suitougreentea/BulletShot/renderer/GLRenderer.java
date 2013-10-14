@@ -38,9 +38,20 @@ public class GLRenderer {
     float zoom = 5.0f;
     float viewHeight = 8f; //Default:8
     
+    int timer;
+    
     public GLRenderer(){
         displayWidth = Display.getDisplayMode().getWidth();
         displayHeight = Display.getDisplayMode().getHeight();
+        timer = 0;
+    }
+    
+    public void incrementTimer(){
+        timer++;
+    }
+    
+    public void resetTimer(){
+        timer = 0;
     }
     
     public void draw(Stage s,Transform[] predict,int frame){
@@ -105,7 +116,7 @@ public class GLRenderer {
                 
                 glTranslatef(0,0.001f,0);   //TODO: ずらしてるだけ
                 
-                if(t.getEffect()!=null)t.getEffect().getRenderer().draw(t);
+                if(t.getEffect()!=null)t.getEffect().getRenderer().draw(t,timer);
                 
                 glPopMatrix();
             }

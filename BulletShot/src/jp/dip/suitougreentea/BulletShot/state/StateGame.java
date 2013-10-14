@@ -126,6 +126,8 @@ public class StateGame extends BasicGameState {
 			throws SlickException {
 	    Input i = gc.getInput();
 	    
+	    r.incrementTimer();
+	    
 	    if(i.isKeyPressed(Input.KEY_SPACE))initPhysics();
 	    if(i.isKeyPressed(Input.KEY_C)){
 	        r.changeCameraPos();

@@ -29,7 +29,7 @@ public class Res {
     public static Image sky;
     public static Image cloudssmall,cloudsmedium,cloudslarge;
     
-    public static Image objDash;
+    public static Image objTile;
     
     public static void load() throws SlickException {
         font = loadBitmapFont("main");
@@ -63,7 +63,7 @@ public class Res {
     }
     
     public static void loadObjectTexture() throws SlickException {
-        objDash = loadImage("object/dash.png");
+        objTile = loadImage("object/tile.png");
         //objDash.setFilter(Image.FILTER_NEAREST);
     }
     
