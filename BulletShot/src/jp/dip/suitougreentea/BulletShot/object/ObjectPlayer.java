@@ -7,6 +7,8 @@ import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
 
 public class ObjectPlayer extends ObjectBase {
+    protected int lastEffectX=-1,lastEffectZ=-1;
+
     public ObjectPlayer(Vector3f position){
         this.position = position;
         shape = new SphereShape(0.2f);
@@ -22,5 +24,17 @@ public class ObjectPlayer extends ObjectBase {
         world.getDispatcher().getManifoldByIndexInternal(0);
         rigidBody.getBroadphaseProxy();
         *****/
+    }
+
+    public void setLastEffectPosition(int x, int z) {
+        lastEffectX = x;
+        lastEffectZ = z;
+    }
+    
+    public int getLastEffectX(){
+        return lastEffectX;
+    }
+    public int getLastEffectZ(){
+        return lastEffectZ;
     }
 }

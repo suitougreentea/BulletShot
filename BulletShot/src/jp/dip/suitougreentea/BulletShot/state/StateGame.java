@@ -2,10 +2,6 @@ package jp.dip.suitougreentea.BulletShot.state;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Point3f;
-import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.BulletShot;
@@ -16,18 +12,14 @@ import jp.dip.suitougreentea.BulletShot.renderer.GLRenderer;
 import jp.dip.suitougreentea.BulletShot.renderer.GUIRenderer;
 import jp.dip.suitougreentea.BulletShot.test.StageGenerator;
 import jp.dip.suitougreentea.BulletShot.test.StageGeneratorFlat;
-import jp.dip.suitougreentea.BulletShot.test.StageGeneratorTest;
-
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.Transform;
 
 public class StateGame extends BasicGameState {

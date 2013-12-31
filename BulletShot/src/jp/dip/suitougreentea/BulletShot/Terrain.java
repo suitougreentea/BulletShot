@@ -5,8 +5,6 @@ import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.effect.Effect;
-import jp.dip.suitougreentea.BulletShot.effect.EffectDash;
-
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.collision.shapes.ConvexHullShape;

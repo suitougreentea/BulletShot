@@ -8,15 +8,11 @@ import jp.dip.suitougreentea.BulletShot.Res;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 import jp.dip.suitougreentea.BulletShot.renderer.GLRenderer;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 

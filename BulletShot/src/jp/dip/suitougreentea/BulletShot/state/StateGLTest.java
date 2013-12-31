@@ -2,11 +2,8 @@ package jp.dip.suitougreentea.BulletShot.state;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import java.nio.FloatBuffer;
-
 import jp.dip.suitougreentea.BulletShot.Res;
 
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
@@ -64,7 +61,7 @@ public class StateGLTest extends BasicGameState {
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr)
 			throws SlickException {
-	    Res.sky.draw();
+	    //Res.sky.draw();
 	    
         glEnable(GL_DEPTH_TEST);
         

@@ -6,8 +6,6 @@ import com.bulletphysics.collision.broadphase.OverlappingPairCache;
 import com.bulletphysics.collision.dispatch.CollisionConfiguration;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
 import com.bulletphysics.collision.dispatch.CollisionObject;
-import com.bulletphysics.collision.narrowphase.ManifoldPoint;
-import com.bulletphysics.collision.narrowphase.PersistentManifold;
 
 public class BulletShotDispatcher extends CollisionDispatcher {
 

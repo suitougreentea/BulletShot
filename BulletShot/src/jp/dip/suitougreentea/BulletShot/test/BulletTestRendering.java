@@ -1,6 +1,5 @@
 package jp.dip.suitougreentea.BulletShot.test;
 
-import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.Stage;

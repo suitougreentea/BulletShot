@@ -21,7 +21,6 @@ public class BulletShot {
 
         try {
     		AppGameContainer app = new AppGameContainer(new GameBulletShot(getVersion(),(args.length > 0&&args[0].equals("true"))?true:false));
-    		
     		app.setDisplayMode(640,480, false);
     		
     		app.setShowFPS(false);

@@ -2,7 +2,6 @@ package jp.dip.suitougreentea.BulletShot;
 
 import java.nio.FloatBuffer;
 
-import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.effect.Effect;
@@ -13,7 +12,6 @@ import org.lwjgl.BufferUtils;
 import com.bulletphysics.collision.broadphase.AxisSweep3;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
 import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
-import com.bulletphysics.collision.dispatch.NearCallback;
 import com.bulletphysics.collision.narrowphase.PersistentManifold;
 import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
@@ -158,7 +156,10 @@ public class Stage {
           int z = (int) Math.floor(t.origin.z);
           if(z<0)z=0;
           if(z>=getHeight())z=getHeight()-1;
-          if(getTerrain(x,z).getEffect()!=null)getTerrain(x,z).getEffect().activate(x,z,player);
+          if(getTerrain(x,z).getEffect()!=null && getTerrain(x,z).getEffect().isActivatable(x, z, player)){
+              getTerrain(x,z).getEffect().activate(x,z,player);
+              player.setLastEffectPosition(x,z);
+          }
     }
     
 

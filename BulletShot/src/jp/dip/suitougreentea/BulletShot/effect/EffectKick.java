@@ -2,12 +2,11 @@ package jp.dip.suitougreentea.BulletShot.effect;
 
 import javax.vecmath.Vector3f;
 
-import jp.dip.suitougreentea.BulletShot.BulletShot;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
 
-import com.bulletphysics.dynamics.RigidBody;
+import com.bulletphysics.linearmath.Transform;
 
 /**
  * Change player's angle keeping velocity.
@@ -38,12 +37,24 @@ public class EffectKick extends Effect {
     public void onRegister(){
     }
     @Override
-    public boolean isActivatable(){
+    public boolean isActivatable(int x, int z,ObjectPlayer player){
+        Transform t = new Transform();
+        player.getMotionState().getWorldTransform(t);
+        if(player.getLastEffectX()==x&&player.getLastEffectZ()==z)return false;
+        if(t.origin.x-x>0.25f && t.origin.x-x<0.75f && t.origin.z-z>0.25f && t.origin.z-z<0.75f) return true;
         return false;
     }
     @Override
     public void activate(int x, int z,ObjectPlayer player){
         if(!player.isFlying()){
+            Transform t = new Transform();
+            player.getRigidBody().getWorldTransform(t);
+            //t.transform(new Vector3f(x+0.5f,t.origin.y,z+0.5f));
+            t.origin.x = x+0.5f;
+            t.origin.y = t.origin.y-0.001f;
+            t.origin.z = z+0.5f;
+            player.getRigidBody().setWorldTransform(t);
+            
             Vector3f v = new Vector3f();
             Vector3f s = new Vector3f();
             player.getRigidBody().getLinearVelocity(v);

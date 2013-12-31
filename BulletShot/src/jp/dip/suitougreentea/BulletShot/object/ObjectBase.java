@@ -57,9 +57,9 @@ public class ObjectBase {
         return rotation;
     }
 
-    public Vector3f getPosition() {
+    /*public Vector3f getPosition() {
         return position;
-    }
+    }*/
 
     public float getScale() {
         return scale;

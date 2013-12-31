@@ -13,16 +13,10 @@ public class StateDebug extends BasicGameState {
 	private int stateId;
 	private String[] menu = 
 	    {
+	    "GAME MODE",
 	    "CHECK MENU",
-	    "I/O OPTION",
-	    "DISPLAY OPTION",
-	    "SOUND OPTION",
-	    "GAME OPTION",
-	    "STATISTICS",
-	    "(UNSTABLE) DEBUG OPTION",
-	    "(UNSTABLE) EXPERIMENTAL OPTION",
-	    "(UNSAFE) DEEP SERVICE MENU",
-	    "RETURN TO GAME"
+	    "GLOBALCONFIG",
+	    "RESTART",
 	    };
 
 	public StateDebug(int i) { 
@@ -40,10 +34,9 @@ public class StateDebug extends BasicGameState {
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics gr)
 			throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
-	    Res.debugfont.draw("SERVICE / DEBUG MENU",12,12,2f);
-	    Res.debugfont.drawRight("ARCADE MODE : OFF", 628, 36);
+	    Res.debugfont.draw("DEBUG MENU",12,12,2f);
 	    for(int i=0;i<menu.length;i++){
-            Res.debugfont.draw(menu[i], 64, 64+i*12);
+            Res.debugfont.draw(menu[i], 24, 60+i*12);
         }
 	    Res.debugfont.draw("UP/DOWN : SELECT\nENTER/B1 : DECIDE\nESC/B2 : RESTART GAME", 12, 432);
 	}

@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 
-import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.Res;
@@ -13,7 +12,6 @@ import jp.dip.suitougreentea.BulletShot.Terrain;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
 import org.newdawn.slick.opengl.TextureImpl;

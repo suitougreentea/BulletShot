@@ -2,9 +2,6 @@ package jp.dip.suitougreentea.BulletShot.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.TextureImpl;
-
 import jp.dip.suitougreentea.BulletShot.Res;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 

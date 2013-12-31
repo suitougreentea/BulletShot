@@ -64,7 +64,7 @@ public class Res {
     
     public static void loadObjectTexture() throws SlickException {
         objTile = loadImage("object/tile.png");
-        //objDash.setFilter(Image.FILTER_NEAREST);
+        objTile.setFilter(Image.FILTER_NEAREST);
     }
     
     public static Image loadImage(String path) {

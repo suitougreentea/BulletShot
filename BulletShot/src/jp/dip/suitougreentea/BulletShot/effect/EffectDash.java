@@ -2,13 +2,10 @@ package jp.dip.suitougreentea.BulletShot.effect;
 
 import javax.vecmath.Vector3f;
 
-import jp.dip.suitougreentea.BulletShot.BulletShot;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectDash;
-import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
-
-import com.bulletphysics.dynamics.RigidBody;
+import com.bulletphysics.linearmath.Transform;
 
 /**
  * Add linear power to player.
@@ -40,7 +37,10 @@ public class EffectDash extends Effect {
     public void onRegister(){
     }
     @Override
-    public boolean isActivatable(){
+    public boolean isActivatable(int x, int z,ObjectPlayer player){
+        Transform t = new Transform();
+        player.getMotionState().getWorldTransform(t);
+        if(t.origin.x-x>0.125f && t.origin.x-x<0.875f && t.origin.z-z>0.125f && t.origin.z-z<0.875f) return true;
         return false;
     }
     @Override

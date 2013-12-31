@@ -14,7 +14,7 @@ public class Effect {
     public void onRegister(){
         
     }
-    public boolean isActivatable(){
+    public boolean isActivatable(int x, int z,ObjectPlayer player){
         return false;
     }
     public void activate(int x, int z,ObjectPlayer player){
