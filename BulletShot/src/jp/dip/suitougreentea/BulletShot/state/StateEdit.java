@@ -4,13 +4,15 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 
-import jp.dip.suitougreentea.BulletShot.Res;
+import jp.dip.suitougreentea.BulletShot.GameBulletShot;
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 import jp.dip.suitougreentea.BulletShot.renderer.GLRenderer;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -24,6 +26,8 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 
 public class StateEdit extends BasicGameState {
+    private GameBulletShot game;
+    private Image devBack;
 
     private int stateId;
 
@@ -37,7 +41,10 @@ public class StateEdit extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        r = new GLRenderer();
+        this.game = (GameBulletShot) sbg;
+        this.devBack = game.getResource().getImage(Resource.IMAGEID_BACKGROUND_DEV);
+
+        r = new GLRenderer(game.getResource());
         t = new Terrain[1][1];
         t[0][0] = new Terrain(0, 1, 0, 0, null, 0);
     }
@@ -50,7 +57,7 @@ public class StateEdit extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
         glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        Res.dback.draw();
+        devBack.draw();
         r.view3D();
         glEnable(GL_LIGHT0);
         r.drawFloors(t);
@@ -172,7 +179,7 @@ public class StateEdit extends BasicGameState {
     private void checkAndMakeTerrain(int x, int z) {
         //if (x >= 0 && x < t[0].length && z >= 0 && z < t.length) {
         if (x < 0 || x >= t[0].length || z < 0 || z >= t.length) {
-        //} else {
+            //} else {
             int newWidth = t[0].length;
             int newHeight = t.length;
             int offsetX = 0;

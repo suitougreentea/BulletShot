@@ -1,11 +1,12 @@
 package jp.dip.suitougreentea.BulletShot.renderer;
 
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 
 public class RendererObjectDash extends RendererObjectNormal {
 
-    public RendererObjectDash(int direction) {
-        super(-1, direction);
+    public RendererObjectDash(Resource gameResource, int direction) {
+        super(gameResource, -1, direction);
     }
 
     @Override

@@ -1,14 +1,15 @@
 package jp.dip.suitougreentea.BulletShot;
-
+/*
 import java.io.IOException;
 
 import jp.dip.suitougreentea.util.BitmapFont.BitmapFont;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
-
+ */
+@Deprecated
 public class Res {
-    public static BitmapFont font;
+    /*public static BitmapFont font;
     public static BitmapFont debugfont;
     public static BitmapFont steiner;
     public static BitmapFont debugfontsmall;
@@ -98,5 +99,5 @@ public class Res {
             System.out.println("Failed to load font:" + name);
         }
         return font;
-    }
+    }*/
 }

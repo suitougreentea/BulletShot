@@ -5,16 +5,19 @@ import static org.lwjgl.opengl.GL11.*;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.BulletShot;
+import jp.dip.suitougreentea.BulletShot.GameBulletShot;
 import jp.dip.suitougreentea.BulletShot.PredictStage;
-import jp.dip.suitougreentea.BulletShot.Res;
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.renderer.GLRenderer;
 import jp.dip.suitougreentea.BulletShot.test.StageGenerator;
 import jp.dip.suitougreentea.BulletShot.test.StageGeneratorFlat;
+import jp.dip.suitougreentea.util.BitmapFont.BitmapFont;
 
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -23,6 +26,10 @@ import org.newdawn.slick.state.StateBasedGame;
 import com.bulletphysics.linearmath.Transform;
 
 public class StateGame extends BasicGameState {
+    private GameBulletShot game;
+
+    private BitmapFont debugFont;
+    private Image devBack, guiShoot;
 
     private int stateId;
 
@@ -32,7 +39,11 @@ public class StateGame extends BasicGameState {
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-        r = new GLRenderer();
+        this.game = (GameBulletShot) sbg;
+        this.debugFont = game.getResource().getFont(Resource.FONTID_DEBUG);
+        this.devBack = game.getResource().getImage(Resource.IMAGEID_BACKGROUND_DEV);
+        this.guiShoot = game.getResource().getImage(Resource.IMAGEID_GUI_SHOOT);
+        r = new GLRenderer(game.getResource());
         initPhysics();
     }
 
@@ -44,7 +55,7 @@ public class StateGame extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
         glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-        Res.dback.draw();
+        devBack.draw();
         r.view3D();
         if (state == STATE_SLEEPINGPHYSICS) {
             r.draw(stage, predict, predicttimer);
@@ -55,22 +66,22 @@ public class StateGame extends BasicGameState {
         // gui.draw();
 
         if (state == STATE_SHOOT) {
-            Res.guishoot.draw(0, 0, 136, 96, 0, 0, 136, 96);
-            Res.guishoot.draw(96, 0, 128, 96, 136, 0, 168, 96);
+            guiShoot.draw(0, 0, 136, 96, 0, 0, 136, 96);
+            guiShoot.draw(96, 0, 128, 96, 136, 0, 168, 96);
             int p;
             if (shootpowertimer > 64) {
                 p = 128 - shootpowertimer;
             } else {
                 p = shootpowertimer;
             }
-            Res.guishoot.draw(104, 80 - p, 120, 80, 232, 80 - p, 248, 80);
+            guiShoot.draw(104, 80 - p, 120, 80, 232, 80 - p, 248, 80);
         }
 
         Vector3f pos = stage.getCirclePos();
-        Res.debugfont.draw("Space: Reset", 16, 32);
-        Res.debugfont.draw(String.format("x:%f\ny:%f\nz:%f\nh:%d\nv:%d", pos.x, pos.y, pos.z, hRot, vRot), 16, 48);
-        Res.debugfont.draw(String.format("manifolds:%d", stage.getDynamicsWorld().getDispatcher().getNumManifolds()), 16, 120);
-        Res.debugfont.draw(String.format("Cam:%b", cameraMoving), 16, 160);
+        debugFont.draw("Space: Reset", 16, 32);
+        debugFont.draw(String.format("x:%f\ny:%f\nz:%f\nh:%d\nv:%d", pos.x, pos.y, pos.z, hRot, vRot), 16, 48);
+        debugFont.draw(String.format("manifolds:%d", stage.getDynamicsWorld().getDispatcher().getNumManifolds()), 16, 120);
+        debugFont.draw(String.format("Cam:%b", cameraMoving), 16, 160);
     }
 
     private GLRenderer r;

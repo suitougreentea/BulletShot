@@ -2,9 +2,20 @@ package jp.dip.suitougreentea.BulletShot.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import static jp.dip.suitougreentea.BulletShot.Res.gui;
+import org.newdawn.slick.Image;
+
+import jp.dip.suitougreentea.BulletShot.Resource;
 
 public class GUIRenderer {
+    @SuppressWarnings("unused")
+    private Resource gameResource;
+    private Image gui;
+
+    public GUIRenderer(Resource gameResource) {
+        this.gameResource = gameResource;
+        this.gui = gameResource.getImage(Resource.IMAGEID_GUI_MAIN);
+    }
+
     public void draw() {
         glPushMatrix();
         glTranslatef(0, 384, 0);

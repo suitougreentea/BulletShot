@@ -1,5 +1,6 @@
 package jp.dip.suitougreentea.BulletShot.effect;
 
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
@@ -22,7 +23,7 @@ public class Effect {
 
     }
 
-    public RendererObject getRenderer() {
-        return new RendererObjectNormal(0, 0);
+    public RendererObject getRenderer(Resource gameResource) {
+        return new RendererObjectNormal(gameResource, 0, 0);
     }
 }

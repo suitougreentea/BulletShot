@@ -8,6 +8,7 @@ import jp.dip.suitougreentea.BulletShot.state.StateGame;
 import jp.dip.suitougreentea.BulletShot.state.StateLoading;
 import jp.dip.suitougreentea.BulletShot.state.StateSelect;
 import jp.dip.suitougreentea.BulletShot.state.StateTitle;
+import jp.dip.suitougreentea.util.BitmapFont.BitmapFont;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -16,6 +17,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class GameBulletShot extends StateBasedGame {
+    private Resource resource = new Resource("res");
+    private BitmapFont debugFont;
 
     private boolean stateselect = false;
 
@@ -35,19 +38,33 @@ public class GameBulletShot extends StateBasedGame {
         this.enterState(0);
     }
 
+    //StateLoadingのみ
     @Override
     public void initStatesList(GameContainer gc) throws SlickException {
         this.getState(0).init(gc, this);
     }
 
+    //StateLoadingから呼び出される、他のStateの初期化
+    public void initStates(GameContainer gc) throws SlickException {
+        this.getState(1).init(gc, this);
+        this.getState(2).init(gc, this);
+        this.getState(3).init(gc, this);
+        this.getState(4).init(gc, this);
+        this.getState(5).init(gc, this);
+        this.getState(6).init(gc, this);
+        this.getState(7).init(gc, this);
+
+        this.debugFont = resource.getFont(Resource.FONTID_DEBUG);
+    }
+
     @Override
     protected void postRenderState(GameContainer container, Graphics g) throws SlickException {
         if (this.getCurrentStateID() != 4 && this.getCurrentStateID() != -1 && this.getCurrentStateID() != 0) {
-            Res.debugfont.draw("FPS:" + String.valueOf(container.getFPS()), 16, 16);
-            Res.debugfont.drawRight(String.format("Mem:%.1f/%.1f(%.1f)", Runtime.getRuntime().freeMemory() / 1048576f, Runtime.getRuntime().totalMemory() / 1048576f, Runtime.getRuntime().maxMemory() / 1048576f), 624, 16);
-            Res.debugfont.draw("Offline", 16, 452);
-            Res.debugfont.drawRight(BulletShot.getShorterProductName(), 624, 452);
-            ((LoggerHandler) (BulletShot.LOGGER.getHandlers()[0])).drawRecords();
+            debugFont.draw("FPS:" + String.valueOf(container.getFPS()), 16, 16);
+            debugFont.drawRight(String.format("Mem:%.1f/%.1f(%.1f)", Runtime.getRuntime().freeMemory() / 1048576f, Runtime.getRuntime().totalMemory() / 1048576f, Runtime.getRuntime().maxMemory() / 1048576f), 624, 16);
+            debugFont.draw("Offline", 16, 452);
+            debugFont.drawRight(BulletShot.getShorterProductName(), 624, 452);
+            ((LoggerHandler) (BulletShot.LOGGER.getHandlers()[0])).drawRecords(resource);
         }
     }
 
@@ -85,5 +102,9 @@ public class GameBulletShot extends StateBasedGame {
     @Override
     protected void postUpdateState(GameContainer container, int delta) {
         container.getInput().clearKeyPressedRecord();
+    }
+
+    public Resource getResource() {
+        return resource;
     }
 }

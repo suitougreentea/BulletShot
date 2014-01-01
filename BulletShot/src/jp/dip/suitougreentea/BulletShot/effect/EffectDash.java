@@ -2,9 +2,11 @@ package jp.dip.suitougreentea.BulletShot.effect;
 
 import javax.vecmath.Vector3f;
 
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectDash;
+
 import com.bulletphysics.linearmath.Transform;
 
 /**
@@ -56,7 +58,7 @@ public class EffectDash extends Effect {
     }
 
     @Override
-    public RendererObject getRenderer() {
-        return new RendererObjectDash(direction);
+    public RendererObject getRenderer(Resource gameResource) {
+        return new RendererObjectDash(gameResource, direction);
     }
 }

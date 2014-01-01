@@ -2,23 +2,29 @@ package jp.dip.suitougreentea.BulletShot.renderer;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import jp.dip.suitougreentea.BulletShot.Res;
+import org.newdawn.slick.Image;
+
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 
-public class RendererObjectNormal implements RendererObject {
+public class RendererObjectNormal extends RendererObject {
+    private Image objTile;
     protected int texturex, texturey;
 
-    public RendererObjectNormal(int texturex, int texturey) {
+    public RendererObjectNormal(Resource gameResource, int texturex, int texturey) {
+        super(gameResource);
+        objTile = gameResource.getImage(Resource.IMAGEID_OBJECT_TILE);
         this.texturex = texturex;
         this.texturey = texturey;
     }
 
+    @Override
     public void draw(Terrain t, int timer) {
         drawBase(t, texturex, texturey);
     }
 
     protected void drawBase(Terrain t, int texturex, int texturey) {
-        Res.objTile.bind();
+        objTile.bind();
         if (t.getType() == Terrain.TERRAIN_NORMAL) {
             glBegin(GL_QUADS);
             // glColor3f(1f,1f,1f);

@@ -2,8 +2,6 @@ package jp.dip.suitougreentea.BulletShot.state;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import jp.dip.suitougreentea.BulletShot.Res;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
@@ -71,7 +69,7 @@ public class StateGLTest extends BasicGameState {
         glColor3f(1f, 1f, 1f);
         new Sphere().draw(1f, 20, 20);
 
-        Res.wall.draw();
+        //Res.wall.draw();
         // glBegin()
 
         glDisable(GL_DEPTH_TEST);
@@ -95,7 +93,7 @@ public class StateGLTest extends BasicGameState {
 
     void drawQuad() {
         glEnable(GL_TEXTURE_2D);
-        Res.tile.bind();
+        //Res.tile.bind();
         glBegin(GL11.GL_QUADS);
         glColor3f(1f, 1f, 1f);
         glTexCoord2f(0, 0);

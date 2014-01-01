@@ -6,7 +6,7 @@ import java.nio.FloatBuffer;
 
 import javax.vecmath.Vector3f;
 
-import jp.dip.suitougreentea.BulletShot.Res;
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 
@@ -14,6 +14,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 import org.lwjgl.util.glu.Sphere;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import com.bulletphysics.linearmath.Transform;
@@ -35,9 +36,18 @@ public class GLRenderer {
     private float zoom = 5.0f;
     //private float viewHeight = 8f; // Default:8
 
+    private Resource gameResource;
+    private Image tile, wall, wallRight, wallLeft;
+
     private int timer;
 
-    public GLRenderer() {
+    public GLRenderer(Resource resource) {
+        this.gameResource = resource;
+        this.tile = gameResource.getImage(Resource.IMAGEID_TILE);
+        this.wall = gameResource.getImage(Resource.IMAGEID_WALL);
+        this.wallRight = gameResource.getImage(Resource.IMAGEID_WALL_RIGHT);
+        this.wallLeft = gameResource.getImage(Resource.IMAGEID_WALL_LEFT);
+
         displayWidth = Display.getDisplayMode().getWidth();
         displayHeight = Display.getDisplayMode().getHeight();
         timer = 0;
@@ -114,7 +124,7 @@ public class GLRenderer {
                 glTranslatef(0, 0.001f, 0); // TODO: ずらしてるだけ
 
                 if (t.getEffect() != null) {
-                    t.getEffect().getRenderer().draw(t, timer);
+                    t.getEffect().getRenderer(gameResource).draw(t, timer);
                 }
 
                 glPopMatrix();
@@ -186,7 +196,7 @@ public class GLRenderer {
     public void drawWallBase(int type) {
         switch (type) {
         case WALL_NORMAL:
-            Res.wall.bind();
+            wall.bind();
             glBegin(GL_QUADS);
             glNormal3f(0f, 0f, 1f);
             // glColor3f(1f,1f,1f);
@@ -201,7 +211,7 @@ public class GLRenderer {
             glEnd();
             break;
         case WALL_LEFT:
-            Res.wleft.bind();
+            wallLeft.bind();
             glBegin(GL_TRIANGLES);
             glNormal3f(0f, 0f, 1f);
             // glColor3f(1f,1f,1f);
@@ -214,7 +224,7 @@ public class GLRenderer {
             glEnd();
             break;
         case WALL_RIGHT:
-            Res.wright.bind();
+            wallRight.bind();
             glBegin(GL_TRIANGLES);
             glNormal3f(0f, 0f, 1f);
             glTexCoord2f(1, 0);
@@ -284,7 +294,7 @@ public class GLRenderer {
     }
 
     public void drawNormal() {
-        Res.tile.bind();
+        tile.bind();
         glBegin(GL_QUADS);
         // glColor3f(1f,1f,1f);
         glNormal3f(0f, 1f, 0f);
@@ -300,7 +310,7 @@ public class GLRenderer {
     }
 
     public void drawPyramid() {
-        Res.tile.bind();
+        tile.bind();
         // glColor3f(1f,1f,1f);
 
         /* 1 */
@@ -350,7 +360,7 @@ public class GLRenderer {
     }
 
     public void drawLowSlope(int d) {
-        Res.tile.bind();
+        tile.bind();
         glBegin(GL_QUADS);
         // glColor3f(1f,1f,1f);
         if (d == Terrain.DIRECTION_TOP) {
@@ -375,7 +385,7 @@ public class GLRenderer {
     }
 
     public void drawHighSlope(int d) {
-        Res.tile.bind();
+        tile.bind();
         glBegin(GL_QUADS);
         // glColor3f(1f,1f,1f);
         if (d == Terrain.DIRECTION_TOP) {
@@ -401,7 +411,7 @@ public class GLRenderer {
     }
 
     public void drawSingleSlope(int d) {
-        Res.tile.bind();
+        tile.bind();
         glBegin(GL_TRIANGLES);
         // glColor3f(1f,1f,1f);
         switch (d) {
@@ -475,7 +485,7 @@ public class GLRenderer {
     }
 
     public void drawDoubleSlope(int d) {
-        Res.tile.bind();
+        tile.bind();
         glBegin(GL_TRIANGLES);
         // glColor3f(1f,1f,1f);
         switch (d) {

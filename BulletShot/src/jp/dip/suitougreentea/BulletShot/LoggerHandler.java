@@ -35,7 +35,7 @@ public class LoggerHandler extends Handler {
         }
     }
 
-    public void drawRecords() {
+    public void drawRecords(Resource gameResource) {
         for (int i = 0; i < list.size(); i++) {
             LogRecord record = list.get(i);
             String formattedDisplayStr = String.format("# %s", record.getMessage());
@@ -49,7 +49,7 @@ public class LoggerHandler extends Handler {
             } else {
                 color = new Color(0.5f, 0.5f, 0.5f);
             }
-            Res.debugfontsmall.draw(formattedDisplayStr, 16, 440 + i * 8 - list.size() * 8, color);
+            gameResource.getFont(Resource.FONTID_DEBUG_SMALL).draw(formattedDisplayStr, 16, 440 + i * 8 - list.size() * 8, color);
         }
     }
 

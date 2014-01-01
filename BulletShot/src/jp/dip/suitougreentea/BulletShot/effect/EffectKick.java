@@ -2,6 +2,7 @@ package jp.dip.suitougreentea.BulletShot.effect;
 
 import javax.vecmath.Vector3f;
 
+import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObject;
 import jp.dip.suitougreentea.BulletShot.renderer.RendererObjectNormal;
@@ -74,7 +75,7 @@ public class EffectKick extends Effect {
     }
 
     @Override
-    public RendererObject getRenderer() {
-        return new RendererObjectNormal(4, direction);
+    public RendererObject getRenderer(Resource gameResource) {
+        return new RendererObjectNormal(gameResource, 4, direction);
     }
 }
