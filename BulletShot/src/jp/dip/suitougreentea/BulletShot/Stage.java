@@ -115,9 +115,9 @@ public class Stage {
         }
         // BulletTerrainBuilder.generate(dynamicsWorld, terrain);
         float y = getTerrain(startingX, startingZ).getHeight() * 0.5f + 0.2f; // radius
-                                                                              // of
-                                                                              // the
-                                                                              // player
+        // of
+        // the
+        // player
         switch (getTerrain(startingX, startingZ).getType()) {
         case Terrain.TERRAIN_DOUBLESLOPE:
         case Terrain.TERRAIN_SINGLESLOPE:

@@ -46,22 +46,41 @@ public class EffectKick extends Effect {
         if (player.getLastEffectX() == x && player.getLastEffectZ() == z) {
             return false;
         }
-        if (t.origin.x - x > 0.25f && t.origin.x - x < 0.75f && t.origin.z - z > 0.25f && t.origin.z - z < 0.75f) {
+        /*if (t.origin.x - x > 0.25f && t.origin.x - x < 0.75f && t.origin.z - z > 0.25f && t.origin.z - z < 0.75f) {
             return true;
+        }*/
+
+        float rx = t.origin.x - x;
+        float rz = t.origin.z - z;
+
+        if (Math.sqrt((rx - 0.5f) * (rx - 0.5f) + (rz - 0.5f) * (rz - 0.5f)) < 0.375f) {
+            if ((direction == DIRECTION_TOP || direction == DIRECTION_BOTTOM) && rx > 0.4375f && rx < 0.5625f) {
+                return true;
+            }
+            if ((direction == DIRECTION_LEFT || direction == DIRECTION_RIGHT) && rz > 0.4375f && rz < 0.5625f) {
+                return true;
+            }
+            if ((direction == DIRECTION_TOPRIGHT || direction == DIRECTION_BOTTOMLEFT) && rx + rz > 0.9558f && rx + rz < 1.0442f) { //0.0625/sqrt(2)=0.0442
+                return true;
+            }
+            if ((direction == DIRECTION_TOPLEFT || direction == DIRECTION_BOTTOMRIGHT) && rx - rz > -0.0442f && rx - rz < 0.0442f) {
+                return true;
+            }
         }
+
         return false;
     }
 
     @Override
     public void activate(int x, int z, ObjectPlayer player) {
         if (!player.isFlying()) {
-            Transform t = new Transform();
+            /*Transform t = new Transform();
             player.getRigidBody().getWorldTransform(t);
             // t.transform(new Vector3f(x+0.5f,t.origin.y,z+0.5f));
             t.origin.x = x + 0.5f;
             t.origin.y = t.origin.y - 0.001f;
             t.origin.z = z + 0.5f;
-            player.getRigidBody().setWorldTransform(t);
+            player.getRigidBody().setWorldTransform(t);*/
 
             Vector3f v = new Vector3f();
             Vector3f s = new Vector3f();
@@ -71,6 +90,7 @@ public class EffectKick extends Effect {
             s.y = v.y;
             s.z = (float) Math.sin((270 - direction * 45) * Math.PI / 180) * velocity;
             player.getRigidBody().setLinearVelocity(s);
+            //player.getRigidBody().setAngularVelocity(s);
         }
     }
 

@@ -17,6 +17,7 @@ public class StageGeneratorFlat implements StageGenerator {
         this.groundHeight = groundHeight;
     }
 
+    @Override
     public Terrain[][] generate() {
         int[][] type = new int[stageHeight][stageWidth];
         int[][] height = new int[stageHeight][stageWidth];
@@ -46,6 +47,7 @@ public class StageGeneratorFlat implements StageGenerator {
         effect[3][1] = new EffectKick(EffectKick.DIRECTION_TOPRIGHT);
 
         effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 10);
+        //effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 10);
 
         return Stage.createTerrain(type, height, direction, bumper, effect, chara);
     }
