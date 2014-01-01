@@ -41,6 +41,9 @@ public class EffectKick extends Effect {
 
     @Override
     public boolean isActivatable(int x, int z, ObjectPlayer player) {
+        if (player.isFlying()) {
+            return false;
+        }
         Transform t = new Transform();
         player.getMotionState().getWorldTransform(t);
         if (player.getLastEffectX() == x && player.getLastEffectZ() == z) {
@@ -73,25 +76,23 @@ public class EffectKick extends Effect {
 
     @Override
     public void activate(int x, int z, ObjectPlayer player) {
-        if (!player.isFlying()) {
-            /*Transform t = new Transform();
-            player.getRigidBody().getWorldTransform(t);
-            // t.transform(new Vector3f(x+0.5f,t.origin.y,z+0.5f));
-            t.origin.x = x + 0.5f;
-            t.origin.y = t.origin.y - 0.001f;
-            t.origin.z = z + 0.5f;
-            player.getRigidBody().setWorldTransform(t);*/
+        /*Transform t = new Transform();
+        player.getRigidBody().getWorldTransform(t);
+        // t.transform(new Vector3f(x+0.5f,t.origin.y,z+0.5f));
+        t.origin.x = x + 0.5f;
+        t.origin.y = t.origin.y - 0.001f;
+        t.origin.z = z + 0.5f;
+        player.getRigidBody().setWorldTransform(t);*/
 
-            Vector3f v = new Vector3f();
-            Vector3f s = new Vector3f();
-            player.getRigidBody().getLinearVelocity(v);
-            float velocity = (float) Math.sqrt(Math.pow(v.x, 2) + Math.pow(v.z, 2));
-            s.x = (float) Math.cos((270 - direction * 45) * Math.PI / 180) * velocity;
-            s.y = v.y;
-            s.z = (float) Math.sin((270 - direction * 45) * Math.PI / 180) * velocity;
-            player.getRigidBody().setLinearVelocity(s);
-            //player.getRigidBody().setAngularVelocity(s);
-        }
+        Vector3f v = new Vector3f();
+        Vector3f s = new Vector3f();
+        player.getRigidBody().getLinearVelocity(v);
+        float velocity = (float) Math.sqrt(Math.pow(v.x, 2) + Math.pow(v.z, 2));
+        s.x = (float) Math.cos((270 - direction * 45) * Math.PI / 180) * velocity;
+        s.y = v.y;
+        s.z = (float) Math.sin((270 - direction * 45) * Math.PI / 180) * velocity;
+        player.getRigidBody().setLinearVelocity(s);
+        //player.getRigidBody().setAngularVelocity(s);
     }
 
     @Override

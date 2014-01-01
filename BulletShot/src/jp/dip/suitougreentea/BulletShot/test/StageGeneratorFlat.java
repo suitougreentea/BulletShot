@@ -46,8 +46,8 @@ public class StageGeneratorFlat implements StageGenerator {
         effect[5][1] = new EffectKick(EffectKick.DIRECTION_TOP);
         effect[3][1] = new EffectKick(EffectKick.DIRECTION_TOPRIGHT);
 
-        effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 10);
-        //effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 10);
+        effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 6);
+        effect[6][3] = new EffectDash(EffectDash.DIRECTION_LEFT, 6);
 
         return Stage.createTerrain(type, height, direction, bumper, effect, chara);
     }

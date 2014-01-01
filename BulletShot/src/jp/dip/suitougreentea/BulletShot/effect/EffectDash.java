@@ -42,6 +42,13 @@ public class EffectDash extends Effect {
 
     @Override
     public boolean isActivatable(int x, int z, ObjectPlayer player) {
+        if (player.isFlying()) {
+            return false;
+        }
+        if (player.getLastEffectX() == x && player.getLastEffectZ() == z) {
+            return false;
+        }
+
         Transform t = new Transform();
         player.getMotionState().getWorldTransform(t);
         if (t.origin.x - x > 0.125f && t.origin.x - x < 0.875f && t.origin.z - z > 0.125f && t.origin.z - z < 0.875f) {
@@ -52,9 +59,10 @@ public class EffectDash extends Effect {
 
     @Override
     public void activate(int x, int z, ObjectPlayer player) {
-        if (!player.isFlying()) {
-            player.getRigidBody().applyCentralForce(new Vector3f(2f * speed, 0f, 0f));
-        }
+        Vector3f s = new Vector3f();
+        s.x = (float) Math.cos((270 - direction * 45) * Math.PI / 180) * 25 * speed;
+        s.z = (float) Math.sin((270 - direction * 45) * Math.PI / 180) * 25 * speed;
+        player.getRigidBody().applyCentralForce(new Vector3f(s.x, 0f, s.z)); //TODO: 加速的な
     }
 
     @Override
