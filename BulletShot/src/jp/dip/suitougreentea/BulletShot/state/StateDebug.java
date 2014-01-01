@@ -1,5 +1,6 @@
 package jp.dip.suitougreentea.BulletShot.state;
 
+import jp.dip.suitougreentea.BulletShot.BulletShot;
 import jp.dip.suitougreentea.BulletShot.GameBulletShot;
 import jp.dip.suitougreentea.BulletShot.Resource;
 import jp.dip.suitougreentea.util.BitmapFont.BitmapFont;
@@ -15,7 +16,7 @@ public class StateDebug extends BasicGameState {
     private BitmapFont debugFont;
 
     private int stateId;
-    private String[] menu = {"GAME MODE", "CHECK MENU", "GLOBALCONFIG", "RESTART", };
+    private String[] menu = {"GAME MODE", "CHECK MENU", "GLOBALCONFIG", "RESTART/EXIT", };
 
     public StateDebug(int i) {
         stateId = i;
@@ -30,6 +31,7 @@ public class StateDebug extends BasicGameState {
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics gr) throws SlickException {
         debugFont.draw("DEBUG MENU", 12, 12, 2f);
+        debugFont.draw("PRODUCT: " + BulletShot.getFullProductName(), 12, 36);
         for (int i = 0; i < menu.length; i++) {
             debugFont.draw(menu[i], 24, 60 + i * 12);
         }
