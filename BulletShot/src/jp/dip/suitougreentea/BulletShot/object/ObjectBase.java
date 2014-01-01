@@ -15,29 +15,30 @@ import com.bulletphysics.linearmath.Transform;
 public class ObjectBase {
     protected CollisionShape shape;
     protected float mass = 1f;
-    protected Vector3f inertia = new Vector3f(0f,0f,0f);
-    protected Quat4f rotation = new Quat4f(0f,0f,0f,1f);
-    protected Vector3f position = new Vector3f(0f,0f,0f);
+    protected Vector3f inertia = new Vector3f(0f, 0f, 0f);
+    protected Quat4f rotation = new Quat4f(0f, 0f, 0f, 1f);
+    protected Vector3f position = new Vector3f(0f, 0f, 0f);
     protected float scale = 1f;
-    
+
     protected MotionState motionState;
     protected RigidBodyConstructionInfo rigidBodyCI;
     protected RigidBody rigidBody;
-    
+
     protected boolean flying;
-    
-    public void register(DiscreteDynamicsWorld world){
+
+    public void register(DiscreteDynamicsWorld world) {
         preRegister(world);
-        motionState = new DefaultMotionState(new Transform(new Matrix4f(rotation,position,scale)));
-        shape.calculateLocalInertia(mass,inertia);
-        rigidBodyCI = new RigidBodyConstructionInfo(mass,motionState,shape,inertia);
+        motionState = new DefaultMotionState(new Transform(new Matrix4f(rotation, position, scale)));
+        shape.calculateLocalInertia(mass, inertia);
+        rigidBodyCI = new RigidBodyConstructionInfo(mass, motionState, shape, inertia);
         rigidBody = new RigidBody(rigidBodyCI);
-        world.addRigidBody(rigidBody,(short)0x2,(short)0x1);
+        world.addRigidBody(rigidBody, (short) 0x2, (short) 0x1);
         postRegister(world);
     }
-    
+
     protected void preRegister(DiscreteDynamicsWorld world) {
     }
+
     protected void postRegister(DiscreteDynamicsWorld world) {
     }
 
@@ -57,9 +58,9 @@ public class ObjectBase {
         return rotation;
     }
 
-    /*public Vector3f getPosition() {
-        return position;
-    }*/
+    /*
+     * public Vector3f getPosition() { return position; }
+     */
 
     public float getScale() {
         return scale;

@@ -11,25 +11,23 @@ public class BulletShotDispatcher extends CollisionDispatcher {
 
     public BulletShotDispatcher(CollisionConfiguration collisionConfiguration) {
         super(collisionConfiguration);
-        // TODO 自動生成されたコンストラクター・スタブ
     }
 
     @Override
-    public boolean needsCollision(CollisionObject body0,CollisionObject body1){
-        //super.needsCollision(body0, body1);)
-        //BulletShot.getLogger().warning("Collide!");
+    public boolean needsCollision(CollisionObject body0, CollisionObject body1) {
+        // super.needsCollision(body0, body1);)
+        // BulletShot.getLogger().warning("Collide!");
         return true;
     }
-    
+
     @Override
-    public boolean    needsResponse(CollisionObject body0,CollisionObject body1){
-        
-        //BulletShot.getLogger().warning("Response!");
+    public boolean needsResponse(CollisionObject body0, CollisionObject body1) {
+        // BulletShot.getLogger().warning("Response!");
         return super.needsResponse(body0, body1);
     }
-    
+
     @Override
-    public void  dispatchAllCollisionPairs(OverlappingPairCache pairCache,DispatcherInfo dispatchInfo,Dispatcher dispatcher){
+    public void dispatchAllCollisionPairs(OverlappingPairCache pairCache, DispatcherInfo dispatchInfo, Dispatcher dispatcher) {
         super.dispatchAllCollisionPairs(pairCache, dispatchInfo, dispatcher);
     }
 }

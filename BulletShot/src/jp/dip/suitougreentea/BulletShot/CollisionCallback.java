@@ -8,14 +8,13 @@ import com.bulletphysics.collision.dispatch.NearCallback;
 
 public class CollisionCallback extends NearCallback {
 
-    DefaultNearCallback dCallBack = new DefaultNearCallback();
-    
+    private DefaultNearCallback dCallBack = new DefaultNearCallback();
+
     @Override
-    public void handleCollision(BroadphasePair collisionPair,
-            CollisionDispatcher dispatcher, DispatcherInfo dispatchInfo) {
+    public void handleCollision(BroadphasePair collisionPair, CollisionDispatcher dispatcher, DispatcherInfo dispatchInfo) {
         dCallBack.handleCollision(collisionPair, dispatcher, dispatchInfo);
-       BulletShot.getLogger().warning("Collide!");
-      
+        BulletShot.LOGGER.warning("Collide!");
+
     }
 
 }
