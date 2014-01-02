@@ -27,9 +27,6 @@ public class EffectKick extends Effect {
     public static final int DIRECTION_RIGHT = 6;
     public static final int DIRECTION_TOPRIGHT = 7;
 
-    public static final int SPEED_SLOW = 0;
-    public static final int SPEED_FAST = 1;
-
     public EffectKick(int direction) {
         // super(x,z);
         this.direction = direction;

@@ -4,7 +4,10 @@ import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.Terrain;
 import jp.dip.suitougreentea.BulletShot.effect.Effect;
 import jp.dip.suitougreentea.BulletShot.effect.EffectDash;
+import jp.dip.suitougreentea.BulletShot.effect.EffectGrass;
 import jp.dip.suitougreentea.BulletShot.effect.EffectKick;
+import jp.dip.suitougreentea.BulletShot.effect.EffectNeedle;
+import jp.dip.suitougreentea.BulletShot.effect.EffectSand;
 
 public class StageGeneratorFlat implements StageGenerator {
     private int stageWidth;
@@ -46,8 +49,16 @@ public class StageGeneratorFlat implements StageGenerator {
         effect[5][1] = new EffectKick(EffectKick.DIRECTION_TOP);
         effect[3][1] = new EffectKick(EffectKick.DIRECTION_TOPRIGHT);
 
-        effect[2][3] = new EffectDash(EffectDash.DIRECTION_RIGHT, 6);
+        effect[2][3] = new EffectDash(EffectDash.DIRECTION_NULL, 6);
         effect[6][3] = new EffectDash(EffectDash.DIRECTION_LEFT, 6);
+
+        effect[1][0] = new EffectGrass(EffectGrass.DIRECTION_BOTTOM, 6);
+        effect[2][0] = new EffectGrass(EffectGrass.DIRECTION_BOTTOM, 6);
+        effect[3][0] = new EffectGrass(EffectGrass.DIRECTION_BOTTOM, 6);
+
+        effect[0][1] = new EffectSand(6);
+        effect[0][2] = new EffectSand(6);
+        effect[0][3] = new EffectNeedle(6);
 
         return Stage.createTerrain(type, height, direction, bumper, effect, chara);
     }

@@ -18,7 +18,7 @@ public final class BulletShot {
 
     public static final String PRODUCT_NAME = "BulletShot";
     public static final String VERSION = "M3";
-    public static final String DEV_VERSION = "(OBJECT / GAMEPLAY TEST) - 0.3.05";
+    public static final String DEV_VERSION = "(OBJECT / GAMEPLAY TEST) - 0.3.07";
 
     public static void main(String[] args) throws SlickException {
         LOGGER.setUseParentHandlers(false);
