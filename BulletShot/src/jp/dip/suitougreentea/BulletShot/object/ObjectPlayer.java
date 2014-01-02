@@ -7,20 +7,35 @@ import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
 
 public class ObjectPlayer extends ObjectBase {
-    public ObjectPlayer(Vector3f position){
+    protected int lastEffectX = -1, lastEffectZ = -1;
+
+    public ObjectPlayer(Vector3f position) {
         this.position = position;
         shape = new SphereShape(0.2f);
     }
-    
-    protected void postRegister(DiscreteDynamicsWorld world){
+
+    protected void postRegister(DiscreteDynamicsWorld world) {
         this.rigidBody.setRestitution(0.5f);
-        this.rigidBody.setDamping(0f,0f);
+        this.rigidBody.setDamping(0f, 0f);
         this.rigidBody.setActivationState(RigidBody.ISLAND_SLEEPING);
 
         /*****
          * Proxyでグループ取得できる。これ使ってどうにか
-        world.getDispatcher().getManifoldByIndexInternal(0);
-        rigidBody.getBroadphaseProxy();
-        *****/
+         * world.getDispatcher().getManifoldByIndexInternal(0);
+         * rigidBody.getBroadphaseProxy();
+         *****/
+    }
+
+    public void setLastEffectPosition(int x, int z) {
+        lastEffectX = x;
+        lastEffectZ = z;
+    }
+
+    public int getLastEffectX() {
+        return lastEffectX;
+    }
+
+    public int getLastEffectZ() {
+        return lastEffectZ;
     }
 }

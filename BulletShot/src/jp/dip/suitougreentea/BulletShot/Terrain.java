@@ -5,8 +5,6 @@ import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import jp.dip.suitougreentea.BulletShot.effect.Effect;
-import jp.dip.suitougreentea.BulletShot.effect.EffectDash;
-
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
 import com.bulletphysics.collision.shapes.ConvexHullShape;
@@ -16,18 +14,19 @@ import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
 
-public class Terrain {  //TODO: setする必要性？
+public class Terrain {
+    // TODO: setする必要性？
     private int type;
     public static final int TERRAIN_NORMAL = 0;
     public static final int TERRAIN_LOWSLOPE = 1;
     public static final int TERRAIN_HIGHSLOPE = 2;
     public static final int TERRAIN_SINGLESLOPE = 3;
     public static final int TERRAIN_DOUBLESLOPE = 4;
-    //public static final int TERRAIN_TRIANGLE;
+    // public static final int TERRAIN_TRIANGLE;
     public static final int TERRAIN_PYRAMID = 5;
-    
+
     private int height;
-    
+
     private int direction;
     public static final int DIRECTION_TOPLEFT = 0;
     public static final int DIRECTION_BOTTOMLEFT = 1;
@@ -38,7 +37,7 @@ public class Terrain {  //TODO: setする必要性？
     public static final int DIRECTION_BOTTOM = 2;
     public static final int DIRECTION_RIGHT = 3;
     public static final int DIRECTION_NULL = -1;
-    
+
     private int bumper;
     public static final int BUMPER_LEFT = 1;
     public static final int BUMPER_RIGHT = 2;
@@ -52,8 +51,8 @@ public class Terrain {  //TODO: setする必要性？
     public static final int BUMPER_SLASH_BOTTOMRIGHT = 512;
     public static final int BUMPER_BACKSLASH_TOPRIGHT = 1024;
     public static final int BUMPER_BACKSLASH_BOTTOMLEFT = 2048;
-    
-    //private int data;
+
+    // private int data;
     public static final int DATA_SAND = 1;
     public static final int DATA_NEEDLE = 2;
     public static final int DATA_GRASS_LIGHT = 3;
@@ -107,13 +106,13 @@ public class Terrain {  //TODO: setする必要性？
     public static final int DATA_CONVEYOR_RIGHT = 59;
     public static final int DATA_AIR_VERTICAL = 64;
     public static final int DATA_AIR_HORIZONTAL = 65;
-    
+
     private int chara;
-    
-    private RigidBody slopeRigidBody,floorRigidBody;
+
+    private RigidBody slopeRigidBody, floorRigidBody;
     private Effect effect;
-    
-    public Terrain(int type,int height,int direction,int bumper,Effect effect,int chara){
+
+    public Terrain(int type, int height, int direction, int bumper, Effect effect, int chara) {
         this.type = type;
         this.height = height;
         this.direction = direction;
@@ -122,43 +121,40 @@ public class Terrain {  //TODO: setする必要性？
         this.chara = chara;
         init();
     }
-    
-    private void init(){
-        //if(data==5)effect = new EffectDash(0,0);
+
+    private void init() {
+        // if(data==5)effect = new EffectDash(0,0);
     }
-    
-    public void generateRigidBody(int x, int z){
-        if(type != Terrain.TERRAIN_NORMAL){
-            ObjectArrayList<Vector3f> points = BulletTerrainBuilder.getPoints(this);    //TODO: 渡すものが多すぎるかもしれない
+
+    public void generateRigidBody(int x, int z) {
+        if (type != Terrain.TERRAIN_NORMAL) {
+            ObjectArrayList<Vector3f> points = BulletTerrainBuilder.getPoints(this); // TODO: 渡すものが多すぎるかもしれない
             CollisionShape slopeShape = new ConvexHullShape(points);
-            DefaultMotionState slopeMotionState = new DefaultMotionState(new Transform(new Matrix4f(
-              new Quat4f(0,0,0,1f),new Vector3f(x,height*0.5f,z), 1f)));
-            RigidBodyConstructionInfo slopeRigidBodyCI = new RigidBodyConstructionInfo(0,slopeMotionState,slopeShape,new Vector3f(0,0,0));
+            DefaultMotionState slopeMotionState = new DefaultMotionState(new Transform(new Matrix4f(new Quat4f(0, 0, 0, 1f), new Vector3f(x, height * 0.5f, z), 1f)));
+            RigidBodyConstructionInfo slopeRigidBodyCI = new RigidBodyConstructionInfo(0, slopeMotionState, slopeShape, new Vector3f(0, 0, 0));
             slopeRigidBody = new RigidBody(slopeRigidBodyCI);
-            //dynamicsWorld.addRigidBody(slopeRigidBody);
-            
-            //dynamicsWorld.addRigidBody(slopeRigidBody,(short)0x1,(short)0x2);
+            // dynamicsWorld.addRigidBody(slopeRigidBody);
+
+            // dynamicsWorld.addRigidBody(slopeRigidBody,(short)0x1,(short)0x2);
             slopeRigidBody.setActivationState(RigidBody.ISLAND_SLEEPING);
             slopeRigidBody.setRestitution(1.0f);
         }
-        
-        CollisionShape boxShape = new BoxShape(new Vector3f(0.5f,height*0.25f,0.5f));
-        DefaultMotionState boxMotionState = 
-                new DefaultMotionState(new Transform(
-                        new Matrix4f(new Quat4f(0,0,0,1),new Vector3f(x+0.5f,height*0.25f,z+0.5f), 1f)
-                ));
-        RigidBodyConstructionInfo boxRigidBodyCI = new RigidBodyConstructionInfo(0,boxMotionState,boxShape,new Vector3f(0,0,0));
+
+        CollisionShape boxShape = new BoxShape(new Vector3f(0.5f, height * 0.25f, 0.5f));
+        DefaultMotionState boxMotionState = new DefaultMotionState(new Transform(new Matrix4f(new Quat4f(0, 0, 0, 1), new Vector3f(x + 0.5f, height * 0.25f, z + 0.5f), 1f)));
+        RigidBodyConstructionInfo boxRigidBodyCI = new RigidBodyConstructionInfo(0, boxMotionState, boxShape, new Vector3f(0, 0, 0));
         floorRigidBody = new RigidBody(boxRigidBodyCI);
-        
-        //dynamicsWorld.addRigidBody(boxRigidBody,(short)0x1,(short)0x2);
+
+        // dynamicsWorld.addRigidBody(boxRigidBody,(short)0x1,(short)0x2);
         floorRigidBody.setActivationState(RigidBody.ISLAND_SLEEPING);
         floorRigidBody.setRestitution(1.0f);
     }
-    
-    public boolean isBumperAvailable(int bumperdata){
+
+    public boolean isBumperAvailable(int bumperdata) {
         return (this.bumper & bumperdata) == bumperdata;
     }
-    //public static final int a=0;
+
+    // public static final int a=0;
 
     public int getType() {
         return type;
@@ -176,9 +172,9 @@ public class Terrain {  //TODO: setする必要性？
         return bumper;
     }
 
-    /*public int getData() {
-        return data;
-    }*/
+    /*
+     * public int getData() { return data; }
+     */
 
     public int getChara() {
         return chara;
@@ -204,9 +200,9 @@ public class Terrain {  //TODO: setする必要性？
         this.bumper = bumper;
     }
 
-    /*public void setData(int data) {
-        this.data = data;
-    }*/
+    /*
+     * public void setData(int data) { this.data = data; }
+     */
 
     public RigidBody getSlopeRigidBody() {
         return slopeRigidBody;

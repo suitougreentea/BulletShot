@@ -55,8 +55,9 @@ public class BulletTest extends DemoApplication {
 
         renderme();
 
-        if (this.dynamicsWorld != null)
+        if (this.dynamicsWorld != null) {
             this.dynamicsWorld.debugDrawWorld();
+        }
     }
 
     public void initPhysics() {
@@ -81,10 +82,8 @@ public class BulletTest extends DemoApplication {
         int width = 20;
         int length = 20;
         float[] heightfieldData = new float[width * length];
-        {
-            for (int i = 0; i < width * length; i++) {
-                heightfieldData[i] = 0;
-            }
+        for (int i = 0; i < width * length; i++) {
+            heightfieldData[i] = 0;
         }
         // heightfieldData [10*20+10]=5;
         // btHeightfieldTerrainShape* heightFieldShape = new
@@ -138,15 +137,15 @@ public class BulletTest extends DemoApplication {
             colShape.calculateLocalInertia(mass, localInertia);
         }
 
-        float start_x = -5.0F;
-        float start_y = -5.0F;
-        float start_z = -5.0F;
+        float startX = -5.0F;
+        float startY = -5.0F;
+        float startZ = -5.0F;
 
         for (int k = 0; k < 3; ++k) {
             for (int i = 0; i < 3; ++i) {
                 for (int j = 0; j < 3; ++j) {
-                    startTransform.origin.set(2.0F * i + start_x, 10.0F + 2.0F
-                            * k + start_y, 2.0F * j + start_z);
+                    startTransform.origin.set(2.0F * i + startX, 10.0F + 2.0F
+                            * k + startY, 2.0F * j + startZ);
 
                     myMotionState = new DefaultMotionState(startTransform);
                     rbInfo = new RigidBodyConstructionInfo(mass, myMotionState,
@@ -163,7 +162,7 @@ public class BulletTest extends DemoApplication {
 
         clientResetScene();
     }
-    
+
     public static void main(String[] args) throws LWJGLException {
         BulletTest ccdDemo = new BulletTest(LWJGL.getGL());
         ccdDemo.initPhysics();

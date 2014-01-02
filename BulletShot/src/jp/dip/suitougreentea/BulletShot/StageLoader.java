@@ -4,8 +4,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class StageLoader {
+    @SuppressWarnings("unused")
     private FileInputStream stream;
-    
+
     public StageLoader(String path) {
         try {
             stream = new FileInputStream(path);
@@ -13,11 +14,11 @@ public class StageLoader {
             e.printStackTrace();
         }
     }
-    
-    public Stage load(FileInputStream stream){
+
+    public Stage load(FileInputStream stream) {
         return null;
-        //return process(stream);
+        // return process(stream);
     }
-    
-    //private Stage 
+
+    // private Stage
 }
