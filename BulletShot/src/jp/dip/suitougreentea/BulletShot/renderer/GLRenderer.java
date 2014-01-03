@@ -3,6 +3,7 @@ package jp.dip.suitougreentea.BulletShot.renderer;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import javax.vecmath.Vector3f;
 
@@ -67,24 +68,66 @@ public class GLRenderer {
      * Get drawing buffers of floors.
      * @return Arrays of FloatBuffer. [0] is Normal, [1] is TexCoord, [2] is Vertex.
      */
-    public FloatBuffer[] getBuffer(int x, int z, Terrain t){
-        FloatBuffer[] result = new FloatBuffer[3];
-        result[0] = BufferUtils.createFloatBuffer(18);
+    public Buffers getBuffer(int x, int z, Terrain t){
+        FloatBuffer normal = null;
+        FloatBuffer texcoord = null;
+        FloatBuffer  vertex = null;
+        IntBuffer index = null;
+
         int type = t.getType();
         int height = t.getHeight();
         int direction = t.getDirection();
 
-        if(type==Terrain.TERRAIN_NORMAL){
-            result[0].put(new float[]{
+        if(type==Terrain.TERRAIN_PYRAMID){
+            normal = BufferUtils.createFloatBuffer(15);
+            texcoord = BufferUtils.createFloatBuffer(10);
+            vertex = BufferUtils.createFloatBuffer(15);
+            index = BufferUtils.createIntBuffer(12);
+        } else {
+            normal = BufferUtils.createFloatBuffer(12); //TODO: 頂点法線
+            texcoord = BufferUtils.createFloatBuffer(8);
+            vertex = BufferUtils.createFloatBuffer(12);
+            index = BufferUtils.createIntBuffer(6);
+
+            switch (type) {
+            case Terrain.TERRAIN_NORMAL:
+            case Terrain.TERRAIN_SINGLESLOPE:
+            case Terrain.TERRAIN_DOUBLESLOPE:
+            case Terrain.TERRAIN_HIGHSLOPE:
+            case Terrain.TERRAIN_LOWSLOPE:
+                normal.put(new float[]{
+                        0, 1, 0,
+                        0, 1, 0,
+                        0, 1, 0,
+                        0, 1, 0
+                });
+                break;
+            }
+
+            texcoord.put(new float[]{
+                    0, 0,
+                    0, 1,
+                    1, 1,
+                    1, 0
+            });
+
+            vertex.put(new float[]{
                     x, TerrainUtil.getHeight(0, 0, type, height, direction), z,
                     x, TerrainUtil.getHeight(0, 1, type, height, direction), z+1,
                     x+1, TerrainUtil.getHeight(1, 1, type, height, direction), z+1,
-                    x+1, TerrainUtil.getHeight(1, 1, type, height, direction), z+1,
-                    x+1, TerrainUtil.getHeight(1, 0, type, height, direction), z,
-                    x, TerrainUtil.getHeight(0, 0, type, height, direction), z,
+                    x+1, TerrainUtil.getHeight(1, 0, type, height, direction), z
             });
-        } 
-        return result;
+
+            index.put(new int[]{
+                    0, 1, 3, 1, 2, 3     
+            });
+        }
+
+        normal.flip();
+        texcoord.flip();
+        vertex.flip();
+        index.flip();
+        return new Buffers(normal, texcoord, vertex, index);
     }
 
     public void draw(Stage s,Transform[] predict,int frame){
@@ -141,15 +184,28 @@ public class GLRenderer {
                 glVertex3f(1,0,0);
                 glEnd();*/
 
-                FloatBuffer[] buf = getBuffer(ix,iz,t);
-                TextureImpl.bindNone();
+                Buffers buf = getBuffer(ix,iz,t);
+                tile.bind();
                 glColor3f(1f,1f,1f);
+
+                glEnableClientState(GL_NORMAL_ARRAY);
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
                 glEnableClientState(GL_VERTEX_ARRAY);
-                glVertexPointer(3, 0, buf[0]);
-                glDrawArrays(GL_TRIANGLES,0,18);
+
+                glNormalPointer(0, buf.getNormal());
+                glTexCoordPointer(2, 0, buf.getTexcoord());
+                glVertexPointer(3, 0, buf.getVertex());
+                //glDrawArrays(GL_TRIANGLES,0,6);
+                glDrawElements(GL_TRIANGLES, buf.getIndex());
+                //TODO: glDrawElements
+
+                glDisableClientState(GL_NORMAL_ARRAY);
+                glDisableClientState(GL_TEXTURE_COORD_ARRAY);
                 glDisableClientState(GL_VERTEX_ARRAY);
 
-                glTranslatef(ix,0.001f,iz);   //TODO: ずらしてるだけ
+                //buf = null;
+
+                glTranslatef(ix, t.getHeight() * 0.5f + 0.001f, iz);   //TODO: ずらしてるだけ
 
                 if(t.getEffect()!=null)t.getEffect().getRenderer(gameResource).draw(t, timer);
 
@@ -873,5 +929,29 @@ public class GLRenderer {
 
     public void setZoom(float zoom) {
         this.zoom = zoom;
+    }
+}
+
+class Buffers {
+    private FloatBuffer normal, vertex, texcoord;
+    private IntBuffer index;
+    public Buffers(FloatBuffer normal, FloatBuffer texcoord, FloatBuffer vertex, IntBuffer index) {
+        super();
+        this.normal = normal;
+        this.texcoord = texcoord;
+        this.vertex = vertex;
+        this.index = index;
+    }
+    public FloatBuffer getNormal() {
+        return normal;
+    }
+    public FloatBuffer getVertex() {
+        return vertex;
+    }
+    public FloatBuffer getTexcoord() {
+        return texcoord;
+    }
+    public IntBuffer getIndex() {
+        return index;
     }
 }
