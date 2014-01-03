@@ -31,9 +31,9 @@ public class GLRenderer {
 
     private int displayWidth;
     private int displayHeight;
-    private float cameraPosX = 2.5f;
-    private float cameraPosZ = 2.5f;
-    private float zoom = 5.0f;
+
+    private Camera camera;
+
     //private float viewHeight = 8f; // Default:8
 
     private Resource gameResource;
@@ -50,6 +50,9 @@ public class GLRenderer {
 
         displayWidth = Display.getDisplayMode().getWidth();
         displayHeight = Display.getDisplayMode().getHeight();
+
+        camera = new Camera(displayWidth, displayHeight);
+
         timer = 0;
     }
 
@@ -660,7 +663,7 @@ public class GLRenderer {
 
         glDepthFunc(GL_LEQUAL);
 
-        updateCamera();
+        camera.updateCamera();
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -718,7 +721,7 @@ public class GLRenderer {
         glMatrixMode(GL_PROJECTION);
         glPopMatrix();
 
-        updateCamera();
+        camera.updateCamera();
 
         glMatrixMode(GL_MODELVIEW);
         glPopMatrix();
@@ -728,82 +731,7 @@ public class GLRenderer {
         // TextureImpl.bindNone(); //必要?
     }
 
-    public void cameraLeft() {
-        cameraPosX -= 0.07f;
-        cameraPosZ += 0.07f;
-    }
-
-    public void cameraRight() {
-        cameraPosX += 0.07f;
-        cameraPosZ -= 0.07f;
-    }
-
-    public void cameraFront() {
-        cameraPosX -= 0.07f;
-        cameraPosZ -= 0.07f;
-    }
-
-    public void cameraBack() {
-        cameraPosX += 0.07f;
-        cameraPosZ += 0.07f;
-    }
-
-    public void cameraIn() {
-        zoom += 0.05f;
-    }
-
-    public void cameraOut() {
-        zoom -= 0.05f;
-    }
-
-    public void updateCamera() {
-        final float h = (float) displayWidth / (float) (/* 50+ */displayHeight); // TODO:縦横比やっつけ調整
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-zoom * h, zoom * h, -zoom, zoom, -5, 30);
-        if (camerapos == 0) {
-            GLU.gluLookAt(10f + cameraPosX, 12f, 10f + cameraPosZ, 0.0f + cameraPosX, 0.0f, 0.0f + cameraPosZ, 0.0f, 1.0f, 0.0f);
-        }
-        if (camerapos == 1) {
-            GLU.gluLookAt(10f + cameraPosX, 12f, -10f + cameraPosZ, 0.0f + cameraPosX, 0.0f, 0.0f + cameraPosZ, 0.0f, 1.0f, 0.0f);
-        }
-        if (camerapos == 2) {
-            GLU.gluLookAt(-10f + cameraPosX, 12f, -10f + cameraPosZ, 0.0f + cameraPosX, 0.0f, 0.0f + cameraPosZ, 0.0f, 1.0f, 0.0f);
-        }
-        if (camerapos == 3) {
-            GLU.gluLookAt(-10f + cameraPosX, 12f, 10f + cameraPosZ, 0.0f + cameraPosX, 0.0f, 0.0f + cameraPosZ, 0.0f, 1.0f, 0.0f);
-        }
-
-        // GLU.gluLookAt(0,2,0, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);//シャドウマッピング用
-    }
-
-    private int camerapos = 0;
-
-    public void changeCameraPos() {
-        camerapos = (camerapos + 1) % 4;
-    }
-
-    public float getCameraPosX() {
-        return cameraPosX;
-    }
-
-    public void setCameraPosX(float cameraPosX) {
-        this.cameraPosX = cameraPosX;
-    }
-
-    public float getCameraPosZ() {
-        return cameraPosZ;
-    }
-
-    public void setCameraPosZ(float cameraPosZ) {
-        this.cameraPosZ = cameraPosZ;
-    }
-
-    public float getZoom() {
-        return zoom;
-    }
-
-    public void setZoom(float zoom) {
-        this.zoom = zoom;
+    public Camera getCamera() {
+        return camera;
     }
 }

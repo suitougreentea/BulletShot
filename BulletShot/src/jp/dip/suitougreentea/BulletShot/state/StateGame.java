@@ -12,6 +12,7 @@ import jp.dip.suitougreentea.BulletShot.Stage;
 import jp.dip.suitougreentea.BulletShot.renderer.GLRenderer;
 import jp.dip.suitougreentea.BulletShot.test.StageGenerator;
 import jp.dip.suitougreentea.BulletShot.test.StageGeneratorFlat;
+import jp.dip.suitougreentea.BulletShot.test.StageGeneratorTest;
 import jp.dip.suitougreentea.util.BitmapFont.BitmapFont;
 
 import org.lwjgl.opengl.GL11;
@@ -87,7 +88,7 @@ public class StateGame extends BasicGameState {
     private GLRenderer r;
     //private GUIRenderer gui = new GUIRenderer();
 
-    // StageGenerator gen = new StageGeneratorTest();
+    //private StageGenerator gen = new StageGeneratorTest();
     private StageGenerator gen = new StageGeneratorFlat(20, 20, 1);
     private Stage stage = new Stage(gen.generate(), 0, 0);
     private PredictStage predictStage = new PredictStage(gen.generate(), 0, 0);
@@ -136,7 +137,7 @@ public class StateGame extends BasicGameState {
             initPhysics();
         }
         if (i.isKeyPressed(Input.KEY_C)) {
-            r.changeCameraPos();
+            r.getCamera().changeCameraPos();
         }
 
         if (state == STATE_SLEEPINGPHYSICS) {
@@ -155,22 +156,22 @@ public class StateGame extends BasicGameState {
             if (i.isKeyDown(Input.KEY_A)) {
                 cameraMoving = true;
                 if (i.isKeyDown(Input.KEY_LEFT)) {
-                    r.cameraLeft();
+                    r.getCamera().moveLeft();
                 }
                 if (i.isKeyDown(Input.KEY_RIGHT)) {
-                    r.cameraRight();
+                    r.getCamera().moveRight();
                 }
                 if (i.isKeyDown(Input.KEY_UP)) {
-                    r.cameraFront();
+                    r.getCamera().moveFront();
                 }
                 if (i.isKeyDown(Input.KEY_DOWN)) {
-                    r.cameraBack();
+                    r.getCamera().moveBack();
                 }
                 if (i.isKeyDown(Input.KEY_Q)) {
-                    r.cameraIn();
+                    r.getCamera().cameraIn();
                 }
                 if (i.isKeyDown(Input.KEY_W)) {
-                    r.cameraOut();
+                    r.getCamera().cameraOut();
                 }
             } else {
                 cameraMoving = false;

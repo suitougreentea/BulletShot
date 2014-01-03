@@ -91,22 +91,22 @@ public class StateEdit extends BasicGameState {
 
         if (i.isKeyDown(Input.KEY_1)) {
             if (i.isKeyDown(Input.KEY_LEFT)) {
-                r.cameraLeft();
+                r.getCamera().moveLeft();
             }
             if (i.isKeyDown(Input.KEY_RIGHT)) {
-                r.cameraRight();
+                r.getCamera().moveRight();
             }
             if (i.isKeyDown(Input.KEY_UP)) {
-                r.cameraFront();
+                r.getCamera().moveFront();
             }
             if (i.isKeyDown(Input.KEY_DOWN)) {
-                r.cameraBack();
+                r.getCamera().moveBack();
             }
             if (i.isKeyDown(Input.KEY_Q)) {
-                r.cameraIn();
+                r.getCamera().cameraIn();
             }
             if (i.isKeyDown(Input.KEY_W)) {
-                r.cameraOut();
+                r.getCamera().cameraOut();
             }
         } else {
             if (i.isKeyPressed(Input.KEY_LEFT)) {
@@ -212,8 +212,8 @@ public class StateEdit extends BasicGameState {
             t = nt;
             selectedX += offsetX;
             selectedZ += offsetZ;
-            r.setCameraPosX(r.getCameraPosX() + offsetX);
-            r.setCameraPosZ(r.getCameraPosZ() + offsetZ);
+            r.getCamera().setCameraX(r.getCamera().getCameraX() + offsetX);
+            r.getCamera().setCameraZ(r.getCamera().getCameraZ() + offsetZ);
         }
     }
 
