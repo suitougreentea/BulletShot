@@ -110,6 +110,7 @@ public class Terrain {
     private int chara;
 
     private RigidBody slopeRigidBody, floorRigidBody;
+    //private Bumper bumper;
     private Effect effect;
 
     public Terrain(int type, int height, int direction, int bumper, Effect effect, int chara) {

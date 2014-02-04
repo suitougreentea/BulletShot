@@ -10,8 +10,11 @@ import jp.dip.suitougreentea.BulletShot.object.ObjectPlayer;
 import org.lwjgl.BufferUtils;
 
 import com.bulletphysics.collision.broadphase.AxisSweep3;
+import com.bulletphysics.collision.broadphase.BroadphasePair;
+import com.bulletphysics.collision.broadphase.DispatcherInfo;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
 import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
+import com.bulletphysics.collision.dispatch.NearCallback;
 import com.bulletphysics.collision.narrowphase.PersistentManifold;
 import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
@@ -113,11 +116,9 @@ public class Stage {
                 }
             }
         }
+
         // BulletTerrainBuilder.generate(dynamicsWorld, terrain);
-        float y = getTerrain(startingX, startingZ).getHeight() * 0.5f + 0.2f; // radius
-        // of
-        // the
-        // player
+        float y = getTerrain(startingX, startingZ).getHeight() * 0.5f + 0.2f; // radius of the player
         switch (getTerrain(startingX, startingZ).getType()) {
         case Terrain.TERRAIN_DOUBLESLOPE:
         case Terrain.TERRAIN_SINGLESLOPE:
@@ -132,6 +133,9 @@ public class Stage {
         player = new ObjectPlayer(new Vector3f(startingX + 0.5f, y, startingZ + 0.5f));
         player.setFlying(false);
         player.register(dynamicsWorld);
+
+        /*Bumper b = new Bumper(new Vector3f(1.5f,0.6f,1.5f));
+        b.register(dynamicsWorld);*/
     }
 
     public void update() {

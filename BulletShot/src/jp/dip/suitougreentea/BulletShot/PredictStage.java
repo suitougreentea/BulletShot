@@ -8,6 +8,7 @@ import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.Transform;
 
+//TODO: predictIntegratedTransform?
 public class PredictStage extends Stage {
 
     private Vector3f keepingPlayerPosition;
